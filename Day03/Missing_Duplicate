@@ -1,0 +1,48 @@
+// space O(1) and time O(n)
+import java.util.*;
+
+public class Solution {
+
+    public static int[] missingAndRepeating(ArrayList<Integer> arr, int n) {
+        // Write your code here
+        int x=0;
+        int y=0;
+        int num=0;
+        for(int i=0;i<arr.size();i++)
+        {
+            num^=arr.get(i)^(i+1);
+        }
+        int set_bit=(num& ~(num-1));
+        for(int i=0;i<arr.size();i++)
+        {
+            if((arr.get(i)&set_bit)!=0)
+            {
+                x^=arr.get(i);
+            }
+            else 
+            {
+                y^=arr.get(i);
+            }
+            if(((i+1)&set_bit)!=0)
+            {
+                x^=(i+1);
+            }
+            else 
+            {
+                y^=(i+1);
+            }
+        }
+        for(int val:arr)
+        {
+            if((x^val)==0)
+            {
+                return new int[]{y,x};
+            }
+            if((y^val)==0)
+            {
+                return new int[]{x,y};
+            }
+        }
+        return new int[]{x,y};
+    }
+}

@@ -1,0 +1,47 @@
+import java.util.* ;
+import java.io.*; 
+public class Solution {
+    public static long c;
+    public static long getInversions(long arr[], int n) {
+        // Write your code here.
+        c=0;
+        merge(arr,0,n-1);
+        return c;
+    }
+    public static void merge(long arr[],int low,int high)
+    {
+        if(low<high)
+        {
+            int mid=low+(high-low)/2;
+            merge(arr,low,mid);
+            merge(arr,mid+1,high);
+            merge_sort(arr,low,mid,high);
+        }
+    }
+    public static void merge_sort(long[] arr,int low,int mid,int high)
+    {
+        int l1=mid+1-low;
+        int l2=high-mid;
+        long[] arr1=new long[l1];
+        long[] arr2=new long[l2];
+        for(int i=0;i<l1;i++)
+            arr1[i]=arr[low+i];
+        for(int i=0;i<l2;i++)
+            arr2[i]=arr[mid+1+i];
+        int i=0,j=0,k=low;
+        while(i<l1 && j<l2)
+        {
+            if(arr1[i]<=arr2[j])
+                arr[k++]=arr1[i++];
+            else
+            {
+                arr[k++]=arr2[j++];
+                c+=l1-i;
+            }
+        }
+        while(i<l1)
+            arr[k++]=arr1[i++];
+        while(j<l2)
+            arr[k++]=arr2[j++];
+    }
+}
