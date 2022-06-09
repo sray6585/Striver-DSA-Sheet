@@ -1,0 +1,69 @@
+import java.util.* ;
+import java.io.*; 
+import java.util.ArrayList;
+
+public class Solution 
+{
+    public static int c;
+    public static int reversePairs(ArrayList<Integer> nums) 
+    {
+        // Write your code here.
+         int n=nums.size();
+            
+        c=0;
+        merge(nums,0,n-1);
+        return c;
+    }
+    public static  void merge(ArrayList<Integer> nums,int low,int high)
+    {
+        if(low<high)
+        {
+            int mid=low+(high-low)/2;
+            merge(nums,low,mid);
+            merge(nums,mid+1,high);
+            merge_sort(nums,low,mid,high);
+        }
+    }
+    public static void merge_sort(ArrayList<Integer> nums,int low,int mid,int high)
+    {
+        int l1=mid-low+1;
+        int l2=high-mid;
+        int[] arr1=new int[l1];
+        int[] arr2=new int[l2];
+        for(int i=0;i<l1;i++)
+            arr1[i]=nums.get(low+i);
+        for(int i=0;i<l2;i++)
+            arr2[i]=nums.get(mid+1+i);
+        for(int i=0;i<l1;i++)
+        {
+            for(int j=0;j<l2;j++)
+            {
+                long a=arr1[i];
+                long b=arr2[j];
+                //System.out.println(a+",,"+b);
+                if(a>2*b)
+                    c++;
+            }
+        }
+        int k=low;
+        int i=0,j=0;
+        
+        while(i<l1 && j<l2)
+        {
+            if(arr1[i]<=arr2[j])
+                nums.set(k++,arr1[i++]);
+            else
+            {
+                nums.set(k++,arr2[j++]);
+                
+            }
+        }
+        while(i<l1)
+            nums.set(k++,arr1[i++]);
+        while(j<l2)
+             nums.set(k++,arr2[j++]);
+        
+    }
+}
+
+   /* time O(n)  space O(nlogn)*/
