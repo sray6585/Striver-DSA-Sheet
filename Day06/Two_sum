@@ -1,0 +1,35 @@
+import java.util.* ;
+import java.io.*; 
+public class Solution{
+    public static int[][] pairSum(int[] arr, int s) {
+        // Write your code here.
+        Arrays.sort(arr);
+        Map<Integer,Integer> h=new HashMap<>();
+        List<int[]> ans=new ArrayList<>();
+        int n=arr.length;
+        int low=0,high=n-1;       
+        for(int i=0;i<n;i++)
+        {
+            
+            if(h.containsKey(s-arr[i]))
+            {
+                for(int j=0;j<h.get(s-arr[i]);j++)
+                {
+                    if(arr[i]>s-arr[i])
+                        ans.add(new int[]{s-arr[i],arr[i]});
+                    else
+                        ans.add(new int[]{s-arr[i],arr[i]});
+                }
+            }
+            h.put(arr[i],h.getOrDefault(arr[i],0)+1);
+        }
+        int[][] a=new int[ans.size()][2];
+        for(int i=0;i<ans.size();i++)
+        {
+            a[i][0]=ans.get(i)[0];
+            a[i][1]=ans.get(i)[1];
+        }
+        Arrays.sort(a,(p,q)-> p[0]-q[0]);
+        return a;
+    }
+}

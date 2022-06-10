@@ -1,0 +1,45 @@
+import java.util.* ;
+import java.io.*; 
+public class Solution {
+  public static String fourSum(int[] arr, int target, int n) {
+      // Write your code here.
+      int l=n*(n-1)/2;int k=0;
+      Map<Integer,Pair> h=new HashMap<>();
+      for(int i=0;i<n;i++)
+      {
+          for(int j=i+1;j<n;j++)
+          {
+              h.put(arr[i]+arr[j],new Pair(i,j));
+          }
+      }
+      for(int i=0;i<n;i++)
+      {
+          for(int j=i+1;j<n;j++)
+          {
+              if(h.containsKey(target-arr[i]-arr[j]))
+              {
+                  Pair p=h.get(target-arr[i]-arr[j]);
+                  if(p.first!=i && p.second !=j && p.second!=i && p.first!=j)
+                      return "Yes";
+              }
+          }
+      }
+      
+     
+     return "No";
+  }
+    
+}
+class Pair
+{
+    int first;
+    int second;
+    
+    Pair(int first,int second)
+    {
+        this.first=first;
+        this.second=second;
+    }
+}
+
+/** time O(n2) space O(n) */
