@@ -1,0 +1,25 @@
+import java.util.* ;
+import java.io.*; 
+public class Solution 
+{
+	public static int uniqueSubstrings(String input) 
+    {
+		//write your code here
+        Set<Character> s=new HashSet<>();
+        int maxCount=0;
+        int l=0,r=0;
+        while(r<input.length())
+        {
+            while(l<r && s.contains(input.charAt(r)))
+            {
+                s.remove(input.charAt(l));
+                l++;
+            }
+            s.add(input.charAt(r));
+            maxCount=Math.max(maxCount,r-l+1);
+            r++;
+        }
+       
+        return maxCount;
+	}
+}
