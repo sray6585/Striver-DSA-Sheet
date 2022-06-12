@@ -1,0 +1,67 @@
+import java.util.* ;
+import java.io.*; 
+/*
+	Following is the structure of the Singly Linked List.	
+	class LinkedListNode<T> 
+    {
+    	T data;
+    	LinkedListNode<T> next;
+    	public LinkedListNode(T data) 
+        {
+        	this.data = data;
+    	}
+	}
+
+*/
+public class Solution 
+{
+    public static LinkedListNode<Integer> reverseLinkedList(LinkedListNode<Integer> head) 
+    {
+        // Write your code here!
+        if(head==null || head.next==null)
+            return head;
+        LinkedListNode<Integer> pre=null,cur=head,next=head;
+        while(cur!=null)
+        {
+            next=cur.next;
+            cur.next=pre;
+            pre=cur;
+            cur=next;
+        }
+        return pre;
+    }
+}
+
+
+// Recursive Way
+..........................................................................................
+
+import java.util.* ;
+import java.io.*; 
+/*
+	Following is the structure of the Singly Linked List.	
+	class LinkedListNode<T> 
+    {
+    	T data;
+    	LinkedListNode<T> next;
+    	public LinkedListNode(T data) 
+        {
+        	this.data = data;
+    	}
+	}
+
+*/
+public class Solution 
+{
+    public static LinkedListNode<Integer> reverseLinkedList(LinkedListNode<Integer> head) 
+    {
+        // Write your code here!
+        if(head==null || head.next==null)
+            return head;
+        LinkedListNode<Integer> next=head.next;
+        LinkedListNode<Integer> pre=reverseLinkedList(head.next);
+        next.next=head;
+        head.next=null;    
+        return pre;
+    }
+}
