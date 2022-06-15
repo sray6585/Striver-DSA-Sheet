@@ -1,0 +1,103 @@
+import java.util.* ;
+import java.io.*; 
+/***********************************************
+    Following is the class structure of the Node class:
+
+    class Node {
+        int data;
+        Node next;
+
+        Node(int x) {
+            this.data = x;
+            this.next = null;
+        }
+    }
+
+************************************************/
+
+public class Solution {
+    public static Node rotate(Node head, int k) {
+        // Write your code here.
+        int len=length(head);
+        k=k%len;
+        if(k==0 || head==null)
+            return head;
+        Node fast=head,slow=head;
+        for(int i=0;i<k && fast!=null;i++)
+        {
+            fast=fast.next;
+        }
+        while(fast!=null && fast.next!=null)
+        {
+            fast=fast.next;
+            slow=slow.next;
+        }
+        Node temp=slow.next;
+        slow.next=null;
+        fast.next=head;
+        head=temp;
+        return head;
+    }
+    public static int length(Node head)
+    {
+        int c=0;
+        while(head!=null)
+        {
+            c++;
+            head=head.next;
+        }
+        return c;
+    }
+}
+
+
+
+
+/// striver's way of doing it
+
+
+/*
+ * 
+ * import java.util.* ;
+import java.io.*; 
+/***********************************************
+    Following is the class structure of the Node class:
+
+    class Node {
+        int data;
+        Node next;
+
+        Node(int x) {
+            this.data = x;
+            this.next = null;
+        }
+    }
+
+************************************************/
+/*
+public class Solution {
+  public static Node rotate(Node head, int k) {
+      // Write your code here.
+      if(k==0 || head==null)
+          return head;
+      int len=1;
+      Node temp=head;
+      while(temp.next!=null)
+      {
+          temp=temp.next;
+          len++;
+      }
+      k=k%len;
+      temp.next=head;
+      int end=len-k;
+      while(end>0)
+      {
+          temp=temp.next;
+          end--;
+      }
+      head=temp.next;
+      temp.next=null;
+      return head;
+  }
+}
+ */
