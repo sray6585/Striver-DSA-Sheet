@@ -1,0 +1,36 @@
+import java.util.* ;
+import java.io.*; 
+public class Solution {
+    public static long getTrappedWater(long[] arr, int n) {
+        // Write your code here.
+        long waterCount=0,left=arr[0],right=arr[n-1];
+        int low=0,high=n-1;
+        while(low<=high)
+        {
+            if(arr[low]<=arr[high])
+            {
+                if(arr[low]>=left)
+                {
+                    left=arr[low];
+                }
+                else
+                {
+                    waterCount+=left-arr[low];
+                }
+                low++;
+            }
+            else
+            {
+                if(arr[high]>=right)
+                {
+                    right=arr[high];
+                }
+                else
+                    waterCount+=right-arr[high];
+                high--;
+            }
+        }
+        return waterCount;
+    }
+    
+}
