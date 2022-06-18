@@ -1,0 +1,29 @@
+import java.util.*;
+public class Solution
+{
+    public static int jobScheduling(int[][] jobs)
+    {
+        // Write your code here
+        Arrays.sort(jobs,(a,b)-> b[1]-a[1]);
+        int max=0,n=jobs.length;
+        for(int i=0;i<n;i++)
+        {
+            max=Math.max(jobs[i][0],max);
+        }
+        int dead[]=new int[max+1];
+        int profit=0;
+        for(int i=0;i<n;i++)
+        {
+            for(int j=jobs[i][0];j>=1;j--)
+            {
+                if(dead[j]==0)
+                {
+                    profit+=jobs[i][1];
+                    dead[j]=jobs[i][1];
+                    break;
+                }
+            }
+        }
+        return profit;
+    }
+}
