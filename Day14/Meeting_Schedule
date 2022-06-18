@@ -1,0 +1,42 @@
+import java.util.*;
+public class Solution {
+    public static List<Integer> maximumMeetings(int[] start, int[] end) {        
+        //Write your code here
+        ArrayList<Meeting> meets=new ArrayList<>();
+        for(int i=0;i<start.length;i++)
+        {
+            meets.add(new Meeting(start[i],end[i],i+1));
+        }
+        Collections.sort(meets);
+        int limit=0;
+        List<Integer> ans=new ArrayList<>();
+        ans.add(meets.get(0).num);
+        limit=meets.get(0).end;
+        for(int i=1;i<start.length;i++)
+        {
+            if(meets.get(i).start>limit)
+            {
+                ans.add(meets.get(i).num);
+                limit=meets.get(i).end;
+            }
+        }
+        return ans;
+    }
+}
+class Meeting implements Comparable<Meeting>
+{
+    int start;
+    int end;
+    int num;
+    Meeting(int start,int end,int num)
+    {
+        this.start=start;
+        this.end=end;
+        this.num=num;
+    }
+    @Override
+    public int compareTo(Meeting a)
+    {
+            return this.end-a.end;
+    }
+}
