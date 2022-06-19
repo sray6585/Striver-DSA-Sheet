@@ -1,0 +1,19 @@
+public class Solution
+{
+public static int findMinimumCoins(int amount)
+    {
+        // Write your code here.
+        int cur[]={1,2,5,10,20,50,100,500,1000};
+        int c=0;
+        int n=cur.length-1;
+        for(int i=n;i>=0 && amount!=0;i--)
+        {
+            if(cur[i]<=amount)
+            {
+                c+=amount/cur[i];
+                amount=amount%cur[i];
+            }
+        }
+        return c;
+    }
+}

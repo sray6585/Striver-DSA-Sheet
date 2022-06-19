@@ -1,0 +1,42 @@
+import java.util.*;
+public class Solution {
+    public static int maximumActivities(List<Integer> start, List<Integer> end) {
+        //Write your code here
+        int n=start.size();
+        List<Active> list=new ArrayList<>();
+        for(int i=0;i<n;i++)
+        {
+            list.add(new Active(start.get(i),end.get(i),i+1));
+        }
+        Collections.sort(list);
+        int c=1;
+        int limit=list.get(0).end;
+        for(int i=1;i<n;i++)
+        {
+            if(list.get(i).start>=limit)
+            {
+                c++;
+                limit=list.get(i).end;
+            }
+        }
+        return c;
+    }
+}
+class Active implements Comparable<Active>
+{
+    int start;
+    int end;
+    int num;
+    Active(int start,int end,int num)
+    {
+        this.start=start;
+        this.end=end;
+        this.num=num;
+    }
+    
+    @Override
+    public int compareTo(Active b)
+    {
+        return this.end-b.end;
+    }
+}
