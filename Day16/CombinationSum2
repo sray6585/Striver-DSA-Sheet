@@ -1,0 +1,30 @@
+import java.util.*;
+
+public class Solution 
+{
+    public static ArrayList<ArrayList<Integer>> ans;
+    public static ArrayList<ArrayList<Integer>> combinationSum2(ArrayList<Integer> arr, int n, int target)
+    {
+        //    Write your code here.
+        ans=new ArrayList<>();
+        Collections.sort(arr);
+        find(arr,0,n,target,new ArrayList<>());
+        return ans;
+    }
+    public static void find(ArrayList<Integer> arr,int j,int n,int target,ArrayList<Integer> l)
+    {
+        if(target==0)
+           ans.add(new ArrayList<>(l));
+        for(int i=j;i<n;i++)
+        {
+            if(i!=j && arr.get(i)==arr.get(i-1))
+                continue;
+            l.add(arr.get(i));
+            
+            find(arr,i+1,n,target-arr.get(i),l);
+            
+            l.remove(l.size()-1);
+        }
+        
+    }
+}

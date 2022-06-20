@@ -1,0 +1,25 @@
+import java.util.*;
+public class Solution {
+    public static ArrayList<ArrayList<Integer>> ans;
+    public static HashSet<ArrayList<Integer>> h;
+    public static ArrayList<ArrayList<Integer>> uniqueSubsets(int n, int arr[]) {
+        // Write your code here..
+        ans=new ArrayList<>();
+        h=new HashSet<>();
+        Arrays.sort(arr);
+        find(arr,n,0,new ArrayList<>());
+        return ans;    
+}
+    public static void find(int[] arr,int n,int j,ArrayList<Integer> l)
+    {
+        ans.add(new ArrayList<>(l));
+        for(int i=j;i<n;i++)
+        {
+            if(i!=j && arr[i]==arr[i-1])
+                continue;
+            l.add(arr[i]);
+            find(arr,n,i+1,l);
+            l.remove(l.size()-1);
+        }
+    }
+}

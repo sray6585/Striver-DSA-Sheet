@@ -1,0 +1,29 @@
+import java.util.*;
+public class Solution 
+{
+    public static ArrayList<ArrayList<Integer>> ans;
+    public static ArrayList<ArrayList<Integer>> findSubsetsThatSumToK(ArrayList<Integer> arr, int n, int k) 
+	{
+        // Write your code here.
+        ans=new ArrayList<>();
+        find(arr,0,n,k,0,new ArrayList<>());
+        return ans;
+    }
+    public static void find(ArrayList<Integer> arr,int i,int n,int k,int sum,ArrayList<Integer> l)
+    {
+        if(i==n)
+        {
+            if(k!=sum)
+                return;
+            ans.add(l);
+            return;
+        }
+        ArrayList<Integer> o1=new ArrayList<>(l);
+        ArrayList<Integer> o2=new ArrayList<>(l);
+        o1.add(arr.get(i));
+        
+        find(arr,i+1,n,k,sum+arr.get(i),o1);
+        find(arr,i+1,n,k,sum,o2);
+        
+    }
+}
