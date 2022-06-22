@@ -1,0 +1,59 @@
+import java.util.*;
+public class Solution {
+    public static ArrayList<ArrayList<Integer>> ans;
+    public static ArrayList<ArrayList<Integer>> solveNQueens(int n) {
+        // Write your code here.
+        ans=new ArrayList<>();
+        int[][] box=new int[n][n];
+        find(box,n,0);
+        return ans;
+    }
+    public static void find(int[][] box,int n,int j)
+    {
+        if(j==n)
+        {
+            ans.add(create(box,n));
+            return;
+        }
+        for(int i=0;i<n;i++)
+        {
+            if(isSafe(box,i,j,n))
+            {
+                box[i][j]=1;
+                find(box,n,j+1);
+                box[i][j]=0;
+            }
+        }
+    }
+    public static ArrayList<Integer> create(int[][] box,int n)
+    {
+        ArrayList<Integer> ans=new ArrayList<>();
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                ans.add(box[i][j]);
+            }
+        }
+        return ans;
+    }
+    public static boolean isSafe(int[][] box,int i,int j,int n)
+    {
+        for(int k=j;k>=0;k--)
+        {
+            if(box[i][k]==1)
+                return false;
+        }
+        for(int p=i,q=j;p>=0 && q>=0 ;p--,q--)
+        {
+            if(box[p][q]==1)
+                return false;
+        }
+        for(int p=i,q=j;p<n && q>=0 ;p++,q--)
+        {
+            if(box[p][q]==1)
+                return false;
+        }
+        return true;
+    }
+}
