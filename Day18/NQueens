@@ -1,10 +1,15 @@
 import java.util.*;
 public class Solution {
     public static ArrayList<ArrayList<Integer>> ans;
+    public static int[] same;
+    public static int[] lower,upper;
     public static ArrayList<ArrayList<Integer>> solveNQueens(int n) {
         // Write your code here.
         ans=new ArrayList<>();
         int[][] box=new int[n][n];
+        same=new int[n];
+        upper=new int[2*n-1];
+        lower=new int[2*n-1];
         find(box,n,0);
         return ans;
     }
@@ -17,11 +22,17 @@ public class Solution {
         }
         for(int i=0;i<n;i++)
         {
-            if(isSafe(box,i,j,n))
+            if(same[i]==0 && lower[i+j]==0 && upper[n-1+j-i]==0)
             {
                 box[i][j]=1;
+                same[i]=1;
+                lower[i+j]=1;
+                upper[n-1+j-i]=1;
                 find(box,n,j+1);
                 box[i][j]=0;
+                 same[i]=0;
+                lower[i+j]=0;
+                upper[n-1+j-i]=0;
             }
         }
     }
