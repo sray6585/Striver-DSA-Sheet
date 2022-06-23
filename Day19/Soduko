@@ -1,0 +1,42 @@
+public class Solution {
+
+	public static boolean isItSudoku(int matrix[][]) {
+
+		// Write your code here.
+        for(int i=0;i<9;i++)
+        {
+            for(int j=0;j<9;j++)
+            {
+                if(matrix[i][j]==0)
+                {
+                    for(int k=1;k<=9;k++)
+                    {
+                        if(safe(matrix,i,j,k))
+                        {
+                            matrix[i][j]=k;
+                            if(isItSudoku(matrix))
+                                return true;
+                            else
+                                matrix[i][j]=0;
+                        }
+                    }
+                    return false;
+                }
+            }
+        }
+        return true;
+	}
+    public static boolean safe(int[][] matrix,int i,int j,int k)
+    {
+        for(int p=0;p<9;p++)
+        {
+            if(matrix[i][p]==k)
+                return false;
+            if(matrix[p][j]==k)
+                return false;
+            if(matrix[3*(i/3)+p/3][3*(j/3)+p%3]==k)
+                return false;
+        }
+        return true;
+    }
+}
