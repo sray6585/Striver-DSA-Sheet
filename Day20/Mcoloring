@@ -1,0 +1,41 @@
+public class Solution {
+	public static String graphColoring(int[][] mat, int m) {
+		// Write your code here
+        int[] in=new int[mat.length];
+        boolean ans=find(mat,m,in,0);
+        return ans?"YES":"NO";
+	}
+    public static boolean find(int[][] mat,int m,int[] in,int i)
+    {
+        if(i==mat.length)
+        {
+            //System.out.println("olo");
+            return true;
+        }
+            
+        for(int k=1;k<=m;k++)
+        {
+            if(safe(k,in,i,mat))
+            {
+                in[i]=k;
+                //System.out.println("in"+i+".."+k);
+                if(find(mat,m,in,i+1))
+                    return true;
+                in[i]=0;
+            }
+        }
+        return false;       
+    }
+    public static boolean safe(int k,int[] in,int i,int[][] mat)
+    {
+        for(int p=0;p<mat.length;p++)
+        {
+            if(mat[i][p]==1)
+            {
+                if(in[p]==k)
+                    return false;
+            }
+        }
+        return true;
+    }
+}
