@@ -1,0 +1,23 @@
+public class Solution {
+    public static double power(double x,int n){
+        if(n==0)
+            return 1;
+        double temp=power(x,n/2);
+        if(n%2==0) return temp*temp;
+        else return temp*temp*x;
+    }
+    public static double findNthRootOfM(int n, long m) {
+        // Write your code here.
+//         return Math.pow(m,1.000000/n);
+        double low=1,high=m;
+        double diff=1e-9;
+        while(high-low>diff){
+            double mid=(low+high)/2.0;
+            if(power(mid,n)>m)
+                high=mid;
+            else
+                low=mid;        
+        }
+        return low;
+    }
+}
