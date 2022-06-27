@@ -1,0 +1,43 @@
+
+public class Solution {
+    public static long ayushGivesNinjatest(int n, int m, int[] time) {
+        // Write your code here.
+        long low=0,high=0;
+        for(int i=0;i<m;i++)
+        {
+            low=Math.min(low,time[i]);
+            high+=time[i];
+        }
+        long min=Long.MAX_VALUE;
+        while(low<=high)
+        {
+            long mid=low+((high-low)>>1);
+            if(safe(mid,n,m,time))
+            {
+                high=mid-1;
+                min=Math.min(mid,min);
+            }
+            else
+                low=mid+1;                
+        }
+        return min;
+    }
+    public static boolean safe(long mid,int n,int m,int[] time)
+    {
+        long times=0;
+        long days=1;
+        for(int i=0;i<m;i++)
+        {
+            if(time[i]>mid)
+                return false;
+            if(times+time[i]>mid)
+            {
+                days++;
+                times=time[i];
+            }
+            else
+                times+=time[i];
+        }
+        return days<=n;
+    }
+}
