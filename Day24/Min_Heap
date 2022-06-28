@@ -1,0 +1,81 @@
+import java.util.*;
+public class Solution {
+
+    // minHeap function which take size of Queries and Queries as Input.
+// Returns an array out outputs depending on the query.
+    public static List<Integer> heap;
+    public static void push(int num)
+    {
+        heap.add(num);
+        
+        int child=heap.size()-1;
+        int parent=(child-1)/2;
+        while(child>0)
+        {
+           
+            if(heap.get(child)<heap.get(parent))
+            {
+                int temp=heap.get(child);
+                heap.set(child,heap.get(parent));
+                heap.set(parent,temp);
+                child=parent;
+                parent=(child-1)/2;
+            }
+            
+            else
+                return;
+        }
+    }
+    public static int pop()
+    {
+        int val=heap.get(0);
+       
+        heap.set(0,heap.get(heap.size()-1));
+        
+        heap.remove(heap.size()-1);
+        int parent=0;
+        int child1=2*parent+1;
+        int child2=2*parent+2;
+        while(child1<heap.size())
+        {
+            int min=heap.get(parent);
+            int ind=parent;
+            if(heap.get(child1)<min)
+            {
+                min=heap.get(child1);
+                ind=child1;
+            }
+            if(child2<heap.size() && heap.get(child2)<min)
+            {
+                min=heap.get(child2);
+                ind=child2;
+            }
+            if(ind==parent)
+                return val;
+            heap.set(ind,heap.get(parent));
+            heap.set(parent,min);
+            parent=ind;
+            child1=2*parent+1;
+            child2=2*parent+2;
+        }
+        return val;
+    }
+    static int[] minHeap(int n, int[][] q) {
+        // Write your code here.
+        heap=new ArrayList<>();
+        ArrayList<Integer> ans=new ArrayList<>();
+        for(int j=0;j<n;j++)
+        {
+            if(q[j][0]==0)
+            {
+                push(q[j][1]);
+            }
+            else
+            {
+                 ans.add(pop());             
+            }
+        }
+         
+        return ans.stream().mapToInt(i->i).toArray();
+    }
+}
