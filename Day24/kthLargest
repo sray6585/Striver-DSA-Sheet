@@ -1,0 +1,35 @@
+import java.util.*;
+
+
+public class Solution {
+	public static ArrayList<Integer> kthSmallLarge(ArrayList<Integer> arr, int n, int k) {
+		//Write your code here
+        PriorityQueue<Integer> max=new PriorityQueue<>(k,(x,y)->Integer.compare(y,x));
+        PriorityQueue<Integer> min=new PriorityQueue<>(k);
+        for(int i=0;i<k;i++)
+        {
+            int a=arr.get(i);
+            min.offer(a);
+            max.offer(a);
+        }
+        for(int i=k;i<n;i++)
+        {
+            int a=arr.get(i);
+            if(a>min.peek())
+            {
+                min.poll();
+                min.add(a);
+            }
+            if(a<max.peek())
+            {
+                max.poll();
+                max.add(a);
+            }
+        }
+        ArrayList<Integer> ans=new ArrayList<>();
+        
+        ans.add(max.peek());
+        ans.add(min.peek());
+        return ans;
+	}
+}
