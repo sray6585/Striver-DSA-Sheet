@@ -1,0 +1,31 @@
+import java.util.*;
+public class Solution{
+	public static ArrayList<Integer> kMaxSumCombination(ArrayList<Integer> a, ArrayList<Integer> b, int n, int k){
+		// Write your code here.
+        
+        PriorityQueue<Integer> pq=new PriorityQueue<>(k);
+        for(int ele1:a)
+        {
+            for(int ele2:b)
+            {
+                if(pq.size()<k)
+                    pq.add(ele1+ele2);
+                else
+                {
+                    
+                    if(ele1+ele2>pq.peek())
+                    {
+                        pq.poll();
+                        pq.add(ele1+ele2);
+                    }
+                }
+            }
+        }
+        ArrayList<Integer> ans=new ArrayList<>();
+        while(!pq.isEmpty())
+        {
+            ans.add(0,pq.poll());
+        }
+        return ans;
+	}
+}
