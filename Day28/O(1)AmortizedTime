@@ -1,0 +1,49 @@
+import java.util.Stack;
+public class Queue {
+    // Define the data members(if any) here.
+    Stack<Integer> input,output;
+    Queue() {
+        // Initialize your data structure here.
+        input=new Stack<>();
+        output=new Stack<>();
+    }
+
+    void enQueue(int val) {
+        // Implement the enqueue() function.
+        input.push(val);
+    }
+
+    int deQueue() {
+        // Implement the dequeue() function.
+        if(isEmpty())
+           return -1;
+       if(!output.isEmpty())
+           return output.pop();
+       else
+       {
+           while(!input.isEmpty())
+               output.push(input.pop());
+       }
+        return output.pop();
+        
+    }
+
+    int peek() {
+        // Implement the peek() function here.
+       if(isEmpty())
+           return -1;
+       if(!output.isEmpty())
+           return output.peek();
+       else
+       {
+           while(!input.isEmpty())
+               output.push(input.pop());
+       }
+        return output.peek();
+    }
+
+    boolean isEmpty() {
+        // Implement the isEmpty() function here.
+        return input.isEmpty() && output.isEmpty();
+    }
+}
