@@ -1,0 +1,60 @@
+import java.util.Stack;
+public class Solution {
+
+	public static void sortStack(Stack<Integer> stack) {
+		// Write your code here.
+        stack=sort(stack);
+	}
+    public static Stack<Integer> sort(Stack<Integer> st)
+    {
+        if(st.size()==0 || st.size()==1)
+            return st;
+        int val=st.pop();
+        Stack<Integer> ans=sort(st);
+        if(val>ans.peek())
+        {
+            st.push(val);
+            return st;
+        }
+        else
+        {
+            Stack<Integer> temp=new Stack<>();
+            while(!st.isEmpty() && val<st.peek())
+                temp.push(st.pop());
+            st.push(val);
+            while(!temp.isEmpty())
+                st.push(temp.pop());
+        }
+        return st;
+    }
+
+}
+//////////////////////////////////////////////
+
+
+import java.util.Stack;
+public class Solution {
+
+	public static void sortStack(Stack<Integer> stack) {
+		// Write your code here.
+        if(!stack.isEmpty())
+        {
+            int temp=stack.pop();
+            sortStack(stack);
+            sort(stack,temp);
+        }
+	}
+    public static void sort(Stack<Integer> st,int x)
+    {
+        if(st.isEmpty() || x>=st.peek())
+        {
+            st.push(x);
+            return;
+        }
+        int temp=st.pop();
+        sort(st,x);
+        st.push(temp);   
+        
+    }
+
+}
