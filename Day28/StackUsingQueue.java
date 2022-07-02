@@ -2,12 +2,11 @@ import java.util.*;
 public class Stack {
 
     // Define the data members.
-    Queue<Integer> q1,q2;
+    Queue<Integer> q1;
 
     public Stack() {
         // Implement the Constructor.
         q1=new LinkedList<>();
-        q2=new LinkedList<>();
     }
 
 
@@ -27,13 +26,9 @@ public class Stack {
 
     public void push(int element) {
         // Implement the push(element) function.
-        while(!q1.isEmpty())
-        {
-            q2.offer(q1.poll());
-        }
         q1.offer(element);
-        while(!q2.isEmpty())
-            q1.offer(q2.poll());
+        for(int i=0;i<q1.size()-1;i++)
+            q1.offer(q1.poll());
     }
 
     public int pop() {
