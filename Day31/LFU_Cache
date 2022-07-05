@@ -1,0 +1,106 @@
+import java.util.*;
+public class LFUCache {
+    Map<Integer,Node> cache;
+    Map<Integer,LinkedList> freqMap;
+    int capacity;
+    int minFreq;
+	LFUCache(int capacity) {
+		// Write your code here.
+        cache=new HashMap<>();
+        freqMap=new HashMap<>();
+        this.capacity=capacity;
+        this.minFreq=0;
+	}
+
+	int get(int key) {
+		// Write your code here.
+        if(!cache.containsKey(key))
+            return -1; 
+        Node node=cache.get(key);
+        update(node);
+        return node.val;
+	}
+
+	void put(int key, int value) {
+		// Write your code here.  
+        if(capacity==0)
+            return;
+        if(cache.containsKey(key))
+        {
+            Node node=cache.get(key);
+            node.val=value;
+            update(node);
+        }
+        else
+        {
+            if(cache.size()==capacity)
+            {
+                LinkedList l=freqMap.get(minFreq);
+                Node node=l.end.pre;
+                l.removeNode(node);
+                cache.remove(node.key);
+            }
+            minFreq=1;
+            Node newNode=new Node(key,value);
+            LinkedList list=freqMap.getOrDefault(1,new LinkedList());
+            list.addNode(newNode);
+            cache.put(key,newNode);
+            freqMap.put(1,list);
+        }
+	}
+    void update(Node node)
+    {
+        int freq=node.count;
+        LinkedList l=freqMap.get(freq);
+        l.removeNode(node);
+        if(minFreq==freq && l.size==0)
+            minFreq++;
+        node.count++;
+        LinkedList list=freqMap.getOrDefault(node.count,new LinkedList());
+        list.addNode(node);
+        freqMap.put(node.count,list);
+    }
+    class Node
+    {
+        int key;
+        int val;
+        int count;
+        Node pre,next;
+        Node(int key,int val)
+        {
+            this.key=key;
+            this.val=val;
+            count=1;
+        }
+    }
+    class LinkedList
+    {
+        Node start;
+        Node end;
+        int size;
+        LinkedList()
+        {
+            start=new Node(0,0);
+            end=new Node(0,0);
+            start.next=end;
+            end.pre=start;
+            size=0;            
+        }
+        void addNode(Node node)
+        {
+            node.pre=start;
+            node.next=start.next;
+            start.next=node;
+            node.next.pre=node;
+            size++;
+        }
+        void removeNode(Node node)
+        {
+            node.pre.next=node.next;
+            node.next.pre=node.pre;
+            size--;
+        }
+        
+    }
+}
+
