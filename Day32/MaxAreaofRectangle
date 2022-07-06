@@ -5,22 +5,41 @@ public class Solution {
     // Write your code here.
       int n=heights.size();
       Stack<Integer> st=new Stack<>();
-      int area=0;
-      for(int i=0;i<=n;i++)
+      ArrayList<Integer> left=new ArrayList<>();
+      ArrayList<Integer> right=new ArrayList<>();
+      for(int i=0;i<n;i++)
+          right.add(1);
+      for(int i=0;i<n;i++)
       {
-          while(!st.isEmpty() && (i==n || heights.get(st.peek())>=heights.get(i)))
-          {
-              int h=heights.get(i);
+          while(!st.isEmpty() && heights.get(st.peek())>=heights.get(i))
               st.pop();
-              int w=0;
-              if(st.isEmpty())
-                  w=i;
-              else
-                  w=i-st.peek()-1;
-              area=Math.max(area,h*w);
-          }         
+          if(st.isEmpty())
+              left.add(0);
+          else
+              left.add(st.peek()+1);
           st.push(i);
       }
-    return area;
+//       for(int item:left)
+//           System.out.print(item+"..");
+//       System.out.println();
+      while(!st.isEmpty())
+          st.pop();
+      for(int i=n-1;i>=0;i--)
+      {
+          while(!st.isEmpty() && heights.get(st.peek())>=heights.get(i))
+              st.pop();
+          if(st.isEmpty())
+              right.set(i,n-1);
+          else
+              right.set(i,st.peek()-1);
+          st.push(i);
+      }
+//       for(int item:right)
+//           System.out.print(item+"..pop");
+//       System.out.println();
+      int area=0;
+      for(int i=0;i<n;i++)
+          area=Math.max(area,(right.get(i)-left.get(i)+1)*heights.get(i));
+      return area;
   }
 }
