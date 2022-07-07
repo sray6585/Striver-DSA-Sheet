@@ -1,0 +1,58 @@
+import java.util.*;
+public class Solution {
+
+    static class MinStack {
+
+        // Constructor
+        Stack<Integer> st;
+        int min;
+        MinStack() {
+            // Write your code here.
+            st=new Stack<>();
+            min=Integer.MAX_VALUE;
+        }
+
+        // Function to add another element equal to num at the top of stack.
+        void push(int num) {
+            // Write your code here.
+            if(num<min)
+                st.push(min);
+            st.push(num);
+            min=Math.min(num,min);
+        }
+
+        // Function to remove the top element of the stack.
+        int pop() {
+            // Write your code here.
+            if(st.isEmpty() || st.peek()==Integer.MAX_VALUE)
+                return -1;
+            int val=0;
+            if(st.peek()==min)
+            {
+                val=st.pop();
+                min=st.pop();
+            }
+            else
+                val=st.pop();
+            return val;
+        }
+
+        // Function to return the top element of stack if it is present. Otherwise
+        // return -1.
+        int top() {
+            // Write your code here.
+            if(st.isEmpty() || st.peek()==Integer.MAX_VALUE)
+                return -1;
+            return st.peek();
+        }
+
+        // Function to return minimum element of stack if it is present. Otherwise
+        // return -1.
+        int getMin() {
+            // Write your code here.
+            if(st.isEmpty() || st.peek()==Integer.MAX_VALUE)
+                return -1;
+            return min;
+        }
+    }
+}
