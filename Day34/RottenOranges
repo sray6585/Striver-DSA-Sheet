@@ -1,0 +1,43 @@
+import java.util.*;
+public class Solution {
+
+	public static int minTimeToRot(int[][] grid, int n, int m) {
+		// Write your code here.
+        int time=0,count=0;
+        Queue<int[]> q=new LinkedList<>();
+        int[] dir={0,1,0,-1,0};
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<m;j++)
+            {
+                if(grid[i][j]==2)
+                    q.offer(new int[]{i,j});
+                else if(grid[i][j]==1)
+                    count++;
+            }
+        }
+        while(!q.isEmpty())
+        {
+            int s=q.size();
+            for(int i=0;i<s;i++)
+            {
+                int[] point=q.poll();
+                for(int j=0;j<4;j++)
+                {
+                    int x=point[0]+dir[j];
+                    int y=point[1]+dir[j+1];
+                    if(x>=0 && y>=0 && x<n && y<m && grid[x][y]==1)
+                    {
+                        grid[x][y]=2;
+                        q.offer(new int[]{x,y});
+                        count--;
+                    }
+                }
+            }
+            if(!q.isEmpty())
+                time++;
+        }
+        return count==0?time:-1;
+	}
+
+}
