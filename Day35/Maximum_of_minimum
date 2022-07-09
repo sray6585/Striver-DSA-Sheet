@@ -1,0 +1,51 @@
+import java.util.*;
+public class Solution {
+    public static int[] maxMinWindow(int[] a, int n) {
+        // Write your code here
+        
+        int[] left=new int[n];
+        int[] right=new int[n];
+        int[] ans=new int[n];
+        Arrays.fill(left,-1);
+        Arrays.fill(right,n);
+        Arrays.fill(ans,Integer.MIN_VALUE);
+        Stack<Integer> st=new Stack<>();
+        for(int i=0;i<n;i++)
+        {
+            while(!st.isEmpty() && a[st.peek()]>=a[i])
+                st.pop();
+            if(!st.isEmpty())
+                left[i]=st.peek();
+           
+            st.push(i);
+        }
+        while(!st.isEmpty())
+            st.pop();
+        for(int i=n-1;i>=0;i--)
+        {
+            while(!st.isEmpty() && a[st.peek()]>=a[i])
+                st.pop();
+            if(!st.isEmpty())
+                right[i]=st.peek();
+            
+            st.push(i);
+        }
+//         for(int item:left)
+//             System.out.print("left   "+item+"...");
+//         System.out.println();
+//         for(int item:right)
+//             System.out.print("right  "+item+".....");
+//         System.out.println();
+        for(int i=0;i<n;i++)
+            right[i]=right[i]-left[i]-1;
+//         for(int item:right)
+//             System.out.print("right..."+item+"....");
+//         System.out.println();
+        for(int i=0;i<n;i++)
+            ans[right[i]-1]=Math.max(a[i],ans[right[i]-1]);
+        for(int i=n-2;i>=0;i--)
+            ans[i]=Math.max(ans[i],ans[i+1]);
+        return ans;
+    }
+}
+
