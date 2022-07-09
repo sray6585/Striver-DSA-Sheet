@@ -1,0 +1,28 @@
+public class Solution {	
+    public static String ans;
+	public static String longestPalinSubstring(String str) {
+		// Write your code here.
+        int n=str.length();
+        ans="";
+        for(int i=0;i<n;i++)
+        {
+            find(i,i,n,str);
+            find(i,i+1,n,str);
+        }
+        return ans;
+	}
+    public static  void find(int l,int r,int n,String str)
+    {
+        while(l>=0 && r<n && str.charAt(l)==str.charAt(r))
+        {
+                if(r-l+1>ans.length())
+                {
+                    
+                    ans=str.substring(l,r+1);
+                }
+                l--;
+                r++;
+         }
+    }
+    
+}
