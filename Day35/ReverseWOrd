@@ -1,0 +1,29 @@
+import java.util.*;
+public class Solution 
+{
+	public static String reverseString(String str) 
+	{
+		//Write your code here
+        int n=str.length(),i=n-1;
+        StringBuilder ans=new StringBuilder();
+        while(i>=0)
+        {
+            while(i>=0 && str.charAt(i)==' ')
+                i--;
+            if(i<0)
+                break;
+            int j=i;
+            while(i>=0 && str.charAt(i)!=' ')
+                i--;
+            if(ans.length()==0)
+            {
+                ans.append(str.substring(i+1,j+1));
+            }
+            else
+            {
+                ans.append(" "+str.substring(i+1,j+1));
+            }
+        }
+        return ans.toString();
+	}
+}
