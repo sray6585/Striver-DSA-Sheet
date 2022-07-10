@@ -1,0 +1,24 @@
+public class Solution {
+
+	public static int zAlgorithm(String s, String p, int n, int m) {
+		// Write your code here
+        int count=0;
+        int len=n-m+1;
+        int[] z=new int[len];
+        StringBuilder ans=new StringBuilder(p);
+        ans.append("$").append(s);
+        for(int i=0;i<len;i++)
+        {
+            int c=0;
+            int j=0,k=i;
+            while(k<i+m && ans.charAt(j++)==s.charAt(k++))
+                c++;
+            z[i]=c;
+        }
+        for(int i=0;i<len;i++)
+            if(z[i]==m)
+                count++;
+        return count;
+	}
+
+}
