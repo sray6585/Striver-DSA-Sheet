@@ -1,0 +1,41 @@
+import java.util.ArrayList;
+
+public class Solution {
+	public static ArrayList<Integer> stringMatch(String str, String pat) {
+		// Write your code here.
+        ArrayList<Integer> ans=new ArrayList<>();
+        int target=find_Value(pat);
+        int source=find_Value(str.substring(0,pat.length()));
+        //System.out.println(target+".."+source);
+        
+        for(int i=0;i<str.length()-pat.length()+1;i++)
+        {
+            if(i!=0)
+                source+=str.charAt(i+pat.length()-1)-str.charAt(i-1);
+            if(source==target)
+            {
+                int m=0;boolean flag=false;
+                for(int p=i;p<i+pat.length();p++)
+                {
+                    if(str.charAt(p)!=pat.charAt(m++))
+                    {
+                        flag=true; break;
+                    }                      
+                }
+                if(!flag)
+                    ans.add(i);
+            }
+        }
+        return ans;
+        
+	}
+    public static int find_Value(String a)
+    {
+        int max=0;
+        for(char c:a.toCharArray())
+        {
+            max+=c-'A';
+        }
+        return max;
+    }
+}
