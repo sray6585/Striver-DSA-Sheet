@@ -1,0 +1,20 @@
+public class Solution {
+    public static boolean areAnagram(String str1, String str2){
+        // Write your code here.
+        int[] c=new int[26];
+        for(char ch:str1.toCharArray())
+        {
+            c[ch-'a']++;
+        }
+        for(char ch:str2.toCharArray())
+        {
+            c[ch-'a']--;
+        }
+        for(int i=0;i<26;i++)
+        {
+            if(c[i]!=0)
+                return false;
+        }
+        return true;
+    }
+}
