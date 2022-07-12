@@ -1,0 +1,45 @@
+
+public class Solution {
+
+    public static int minCharsforPalindrome(String str) {
+        //Write your code here
+        StringBuilder s=new StringBuilder(str);
+        String rev=new StringBuilder(str).reverse().toString();
+        s.append("$");
+        s.append(rev);
+        int n=find(s.toString());
+        return str.length()-n;
+    }
+    public static int find(String s)
+    {
+        int n=s.length();
+//         System.out.println(s);
+        int[] lps=new int[n];
+        lps[0]=0;
+        int i=1,len=0;
+        while(i<n)
+        {
+            if(s.charAt(i)==s.charAt(len))
+            {
+                len++;
+                lps[i]=len;
+                i++;
+            }
+            else
+            {
+                if(len==0)
+                {
+                    lps[i]=0;
+                    i++;
+                }
+                else
+                    len=lps[len-1];
+            }
+        }
+//         for(int item:lps)
+//             System.out.print(item+".....");
+        return lps[n-1];
+    }
+  
+
+}
