@@ -1,0 +1,47 @@
+import java.util.*;
+public class Solution {
+    public static ArrayList<Integer> list;
+	public static ArrayList<Integer> BFS(int vertex, int edges[][]){
+		// WRITE YOUR CODE HERE
+        ArrayList<TreeSet<Integer>> ans=new ArrayList<>();
+        for(int i=0;i<vertex;i++)
+            ans.add(new TreeSet<>());
+       for(int j=0;j<edges[0].length;j++){
+            int u = edges[0][j];
+            int v = edges[1][j];
+            ans.get(u).add(v);
+            ans.get(v).add(u);
+        }
+        
+        boolean[] visited=new boolean[vertex];
+        list=new ArrayList<>();
+        for(int i=0;i<vertex;i++)
+        {
+            if(!visited[i])
+                bfs(visited,i,ans);
+        }
+        return list;
+	}
+    public static void bfs(boolean[] vis,int i,ArrayList<TreeSet<Integer>> edges)
+    {
+        Queue<Integer> q=new LinkedList<>();
+        q.offer(i);
+        vis[i]=true;
+        while(!q.isEmpty())
+        {
+            int temp=q.poll();
+            list.add(temp);
+            for(Integer node:edges.get(temp))
+            {
+                if(!vis[node])
+                {
+                    vis[node]=true;
+                     q.offer(node);
+                }
+                   
+            }
+        }
+        
+    }
+}
+
