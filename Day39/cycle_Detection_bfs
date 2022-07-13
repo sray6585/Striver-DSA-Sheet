@@ -1,0 +1,51 @@
+import java.util.*;
+public class Solution {
+    
+    public static String cycleDetection(int[][] edges, int n, int m) {
+        // Write your code here.
+        ArrayList<ArrayList<Integer>> adj=new ArrayList<>();
+        for(int i=0;i<=n;i++)
+            adj.add(new ArrayList<>());
+        for(int i=0;i<m;i++)
+        {
+            adj.get(edges[i][0]).add(edges[i][1]);
+            adj.get(edges[i][1]).add(edges[i][0]);
+        }
+        boolean[] visited=new boolean[n+1];
+        for(int i=1;i<n;i++)
+        {
+            if(!visited[i])
+                if(bfs(visited,i,-1,adj)=="Yes")
+                    return "Yes";
+        }
+        return "No";
+    }
+    public static String bfs(boolean[] visited,int i,int parent,ArrayList<ArrayList<Integer>> adj)
+    {
+        Queue<int[]> q=new LinkedList<>();
+        q.offer(new int[]{i,parent});
+        
+        while(!q.isEmpty())
+        {
+            int[] temp=q.poll();
+            
+            visited[temp[0]]=true;
+            for(Integer node:adj.get(temp[0]))
+            {
+                if(!visited[node])
+                {
+                    q.offer(new int[]{node,temp[0]});
+                }
+                else if(temp[1]!=node)
+                {
+                    //System.out.println(parent+"..."+node);
+                     return "Yes";
+                }
+                   
+                    
+            }
+           
+        }
+        return "No";
+    }
+}

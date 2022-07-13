@@ -1,0 +1,38 @@
+import java.util.*;
+public class Solution {
+    
+    public static String cycleDetection(int[][] edges, int n, int m) {
+        // Write your code here.
+        ArrayList<ArrayList<Integer>> adj=new ArrayList<>();
+        for(int i=0;i<=n;i++)
+            adj.add(new ArrayList<>());
+        for(int i=0;i<m;i++)
+        {
+            adj.get(edges[i][0]).add(edges[i][1]);
+            adj.get(edges[i][1]).add(edges[i][0]);
+        }
+        boolean[] visited=new boolean[n+1];
+        for(int i=1;i<n;i++)
+        {
+            if(!visited[i])
+                if(dfs(visited,i,-1,adj)=="Yes")
+                    return "Yes";
+        }
+        return "No";
+    }
+    public static String dfs(boolean[] visited,int i,int parent,ArrayList<ArrayList<Integer>> adj)
+    {
+        visited[i]=true;
+        for(Integer node:adj.get(i))
+        {
+            if(!visited[node])
+            {
+                if(dfs(visited,node,i,adj)=="Yes")
+                    return "Yes";
+            }
+            else if(parent!=node)
+                return "Yes";
+        }
+        return "No";
+    }
+}

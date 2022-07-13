@@ -1,0 +1,39 @@
+import java.util.*;
+public class Solution 
+{
+    public static Stack<Integer> st;
+    public static ArrayList<Integer> topologicalSort(ArrayList<ArrayList<Integer>> edges, int v, int e) 
+    {
+        // Write your code here
+        st=new Stack<>();
+        ArrayList<ArrayList<Integer>> adj=new ArrayList<>();
+        for(int i=0;i<v;i++)
+            adj.add(new ArrayList<>());
+        boolean[] vis=new boolean[v];
+        for(ArrayList<Integer> edge:edges)
+        {
+            adj.get(edge.get(0)).add(edge.get(1));
+        }
+        for(int i=0;i<v;i++)
+        {
+            if(!vis[i])
+                dfs(vis,i,adj);
+        }
+        ArrayList<Integer> ans=new ArrayList<>();
+        while(!st.isEmpty())
+        {
+            ans.add(st.pop());
+        }
+        return ans;
+    }
+    public static void dfs(boolean[] vis,int i,ArrayList<ArrayList<Integer>> adj)
+    {
+        vis[i]=true;
+        for(Integer node:adj.get(i))
+        {
+            if(!vis[node])
+                dfs(vis,node,adj);
+        }
+        st.push(i);
+    }
+}
