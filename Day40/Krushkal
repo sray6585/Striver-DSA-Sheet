@@ -1,0 +1,33 @@
+import java.util.*;
+public class Solution {
+    public static int kruskalMST(int n, int m, ArrayList<ArrayList<Integer>> graph) {
+        // Write your code here.
+        Collections.sort(graph,(a,b)->(a.get(2)-b.get(2)));
+        int[] parent=new int[n+1];
+        for(int i=1;i<n;i++)
+            parent[i]=i;
+        int w=0;
+        int c=0;
+        for(int i=0;i<m && c<n-1;i++)
+        {
+            ArrayList<Integer> edge=graph.get(i);
+            int node1=edge.get(0);
+            int node2=edge.get(1);
+            int wgt=edge.get(2);
+            int parent1=getParent(parent,node1);
+            int parent2=getParent(parent,node2);
+            if(parent1==parent2)
+                continue;
+            w+=wgt;
+            parent[parent2]=parent1;
+        }
+        return w;
+    }
+    public static int getParent(int[] parent,int p)
+    {
+        if(parent[p]==p)
+            return p;
+        return getParent(parent,parent[p]);        
+    }
+    
+}

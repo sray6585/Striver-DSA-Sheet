@@ -1,0 +1,61 @@
+import java.util.*;
+public class Solution {
+
+    public static List<List<Integer>> stronglyConnectedComponents(int n, int[][] edges) {
+        // Write your code here
+        List<List<Integer>> ans=new ArrayList<>();
+        List<List<Integer>> adj=new ArrayList<>();
+        List<List<Integer>> trans=new ArrayList<>();
+        for(int i=0;i<n;i++)
+        {
+            adj.add(new ArrayList<>());
+            trans.add(new ArrayList<>());
+        }
+        for(int i=0;i<edges.length;i++)
+        {
+            int vertex1=edges[i][0];
+            int vertex2=edges[i][1];
+            adj.get(vertex1).add(vertex2);
+            trans.get(vertex2).add(vertex1);
+        }
+        Stack<Integer> st=new Stack<>();
+        boolean visited[]=new boolean[n];
+        for(int i=0;i<n;i++)
+        {
+            if(!visited[i])
+                rdfs(i,visited,adj,st);
+        }
+        Arrays.fill(visited,false);
+        while(!st.isEmpty())
+        {
+            int ele=st.pop();
+            if(!visited[ele])
+            {
+                List<Integer> l=new ArrayList<>();
+                dfs(ele,l,visited,trans);
+                ans.add(l);
+            }
+        }
+        return ans;
+    }
+    public static void rdfs(int i,boolean[] vis,List<List<Integer>> adj,Stack<Integer> st)
+    {
+        vis[i]=true;
+        for(Integer n:adj.get(i))
+        {
+            if(!vis[n])
+                rdfs(n,vis,adj,st);
+        }
+        st.push(i);
+    }
+    public static void dfs(int i,List<Integer> l,boolean[] visited,List<List<Integer>> trans)
+    {
+        visited[i]=true;
+        l.add(i);
+        for(Integer n:trans.get(i))
+        {
+            if(!visited[n])
+                dfs(n,l,visited,trans);
+        }
+    }
+}
