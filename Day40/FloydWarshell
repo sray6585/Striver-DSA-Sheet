@@ -1,0 +1,37 @@
+import java.util.ArrayList;
+
+public class Solution {
+  static int floydWarshall(int n, int m, int src, int dest, ArrayList<ArrayList<Integer>> edges) {
+    // Write your code here.
+      int[][] dp=new int[n+1][n+1];
+      for(int i=0;i<=n;i++)
+      {
+          for(int j=0;j<=n;j++)
+          {
+              dp[i][j]=1000000000;
+              if(i==j)
+                  dp[i][j]=0;
+          }
+      }
+      
+      for(int i=0;i<m;i++)
+      {
+          ArrayList<Integer> edge=edges.get(i);
+          dp[edge.get(0)][edge.get(1)]=edge.get(2);
+      }
+      for(int k=1;k<=n;k++)
+      {
+          
+          for(int i=1;i<=n;i++)
+          {
+              for(int j=1;j<=n;j++)
+              {
+                  if(dp[i][k]!=1000000000 && dp[k][j]!=1000000000)
+                      dp[i][j]=Math.min(dp[i][j],dp[i][k]+dp[k][j]);
+              }
+          }
+      }
+      return dp[src][dest];
+  }
+
+}
