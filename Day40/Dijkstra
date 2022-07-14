@@ -1,0 +1,42 @@
+import java.util.*;
+public class Solution {
+	
+	public static ArrayList < Integer > dijkstra(ArrayList< ArrayList < Integer > > vec, int vertices, int edges, int source){
+		// Write your code here.
+        ArrayList<Integer> w=new ArrayList<>();
+        ArrayList<ArrayList<int[]>> adj=new ArrayList<>();
+        for(int i=0;i<vertices;i++)
+            adj.add(new ArrayList<>());
+        for(ArrayList<Integer> edge:vec)
+        {
+            adj.get(edge.get(0)).add(new int[]{edge.get(1),edge.get(2)});
+             adj.get(edge.get(1)).add(new int[]{edge.get(0),edge.get(2)});
+        }
+        
+        for(int i=0;i<vertices;i++)
+            w.add(Integer.MAX_VALUE);
+        w.set(source,0);
+        PriorityQueue<int[]> pq=new PriorityQueue<>((a,b)->(a[1]-b[1]));
+        pq.offer(new int[]{source,0});
+        while(!pq.isEmpty())
+        {
+            int k=pq.poll()[0]; 
+            
+             for(int[] edge:adj.get(k))
+             {
+                    if( w.get(edge[0])>w.get(k)+edge[1])
+                    {
+                        
+                       
+                             pq.offer(new int[]{edge[0],w.get(k)+edge[1]});
+                             w.set(edge[0],w.get(k)+edge[1]);
+                        
+                       
+                    }
+             }
+                   
+        }
+        return w;
+	}
+    
+}

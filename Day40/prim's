@@ -1,0 +1,75 @@
+import java.util.*;
+
+public class Solution 
+{
+    public static ArrayList<ArrayList<Integer>> calculatePrimsMST(int n, int m, ArrayList<ArrayList<Integer>> g)
+    {
+        // Write your code here.
+        ArrayList<ArrayList<Integer>> ans=new ArrayList<>();
+        int[] parent=new int[n+1];
+        int[] w=new int[n+1];
+        boolean[] vis=new boolean[n+1];
+        Arrays.fill(w,Integer.MAX_VALUE);
+        w[1]=0;
+        parent[1]=-1;
+        for(int i=0;i<n;i++)
+        {
+            int k=minWgt(vis,w);
+            //System.out.println(k+"ppp");
+            vis[k]=true;
+            for(ArrayList<Integer> edge:g)
+            {
+                if(edge.get(0)==k)
+                {
+                    if(!vis[edge.get(1)] && w[edge.get(1)]>edge.get(2))
+                    {
+                        w[edge.get(1)]=edge.get(2);
+                        parent[edge.get(1)]=edge.get(0);
+                    }
+                }
+                else if(edge.get(1)==k)
+                {
+                    if(!vis[edge.get(0)] && w[edge.get(0)]>edge.get(2))
+                    {
+                        w[edge.get(0)]=edge.get(2);
+                        parent[edge.get(0)]=edge.get(1);
+                    }
+                }
+            }
+        }
+        for(int i=2;i<=n;i++)
+        {
+            //System.out.println(i+"pppolp"+parent[i]);
+            ArrayList<Integer> temp=new ArrayList<>();
+            if(i<parent[i])
+            {
+                temp.add(i);
+                temp.add(parent[i]);
+                temp.add(w[i]);
+            }
+            else
+            {
+                
+                temp.add(parent[i]);
+                temp.add(i);
+                temp.add(w[i]);
+            }
+            ans.add(temp);
+        }
+        return ans;
+    }
+    public static int minWgt(boolean[] vis,int[] w)
+    {
+        int index=-1;
+        int wt=Integer.MAX_VALUE;
+        for(int i=1;i<w.length;i++)
+        {
+            if(!vis[i] && w[i]<wt)
+            {
+                index=i;
+                wt=w[i];
+            }
+        }
+        return index;
+    }
+}
