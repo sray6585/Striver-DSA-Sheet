@@ -1,0 +1,23 @@
+import java.util.*;
+public class Solution {
+
+	public static int lcs(String s, String t) {
+		//Your code goes here
+        int m=s.length(),n=t.length();
+        int[][] dp=new int[m+1][n+1];
+        for(int i=0;i<=m;i++)
+            Arrays.fill(dp[i],-1);
+        return find(m,n,s,t,dp);
+    }
+    public static int find(int m,int n,String a,String b,int[][] dp){
+        if(m==0||n==0)
+            return 0;
+        if(dp[m][n]!=-1)
+            return dp[m][n];
+        if(a.charAt(m-1)==b.charAt(n-1))
+            return dp[m][n]=1+find(m-1,n-1,a,b,dp);
+        else
+            return dp[m][n]=Math.max(find(m-1,n,a,b,dp),find(m,n-1,a,b,dp));
+    }
+
+}
