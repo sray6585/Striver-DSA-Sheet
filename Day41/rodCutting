@@ -1,0 +1,28 @@
+public class Solution {
+	public static int cutRod(int price[], int n) {
+		// Write your code here.
+        int len[]=new int[n];
+        for(int i=0;i<n;i++)
+            len[i]=i+1;
+        int[][] dp=new int[n+1][n+1];
+        for(int i=0;i<=n;i++)
+        {
+            for(int j=0;j<=n;j++)
+            {
+                dp[i][j]=-1;
+            }
+        }
+        return find(n,n,price,len,dp);
+	}
+    public static int find(int l,int n,int[] price,int[] len,int[][] dp)
+    {
+        if(l==0||n==0)
+            return 0;
+        if(dp[l][n]!=-1)
+            return dp[l][n];
+        if(len[n-1]>l)
+            return dp[l][n]=find(l,n-1,price,len,dp);
+        else
+            return dp[l][n]=Math.max(find(l,n-1,price,len,dp),price[n-1]+find(l-len[n-1],n,price,len,dp));
+    }
+}
