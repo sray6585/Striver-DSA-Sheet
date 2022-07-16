@@ -1,0 +1,29 @@
+
+public class Solution {
+
+	public static long countWaysToMakeChange(int arr[], int value){
+        //write your code here			
+        
+        int n=arr.length;
+        long dp[][]=new long[n+1][value+1];
+        for(int i=0;i<=n;i++)
+        {
+            for(int j=0;j<=value;j++)
+                dp[i][j]=-1;
+        }
+        return find(arr,n,value,dp);
+	}
+	public static long find(int[] arr,int n,int value,long[][] dp)
+    {
+        if(value==0)
+            return 1;
+        if(n==0)
+            return 0;
+        if(dp[n][value]!=-1)
+            return dp[n][value];
+        if(arr[n-1]<=value)
+            return dp[n][value]=find(arr,n,value-arr[n-1],dp)+find(arr,n-1,value,dp);
+        else
+            return dp[n][value]=find(arr,n-1,value,dp);
+    }
+}

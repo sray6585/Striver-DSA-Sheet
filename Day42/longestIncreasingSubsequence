@@ -1,0 +1,39 @@
+import java.util.*;
+public class Solution {
+
+	public static int longestIncreasingSubsequence(int arr[]) {
+		//Your code goes here
+        int n=arr.length;
+        int[] temp=new int[n];
+        temp[0]=arr[0];
+        int len=1;
+        for(int i=1;i<arr.length;i++)
+        {
+            if(arr[i]>temp[len-1])
+            {
+                temp[len]=arr[i];
+                len++;
+            }
+            else
+            {
+                int index=find(arr[i],len-1,temp);
+                temp[index]=arr[i];
+            }
+        }
+        return len;
+	}
+    public static int find(int ele,int high,int[] temp)
+    {
+        int low=0;
+        while(low<high)
+        {
+            int mid=low+((high-low)>>2);
+            if(ele>temp[mid])
+                low=mid+1;
+            else
+                high=mid;
+        }
+        return low;
+    }
+
+}

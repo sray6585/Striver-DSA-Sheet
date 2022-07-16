@@ -1,0 +1,35 @@
+
+public class Solution {
+
+    public static int editDistance(String str1, String str2) {
+        //Your code goes here
+        int m=str1.length(),n=str2.length();
+        int[][] dp=new int[m+1][n+1];
+        for(int i=0;i<=m;i++)
+        {
+            for(int j=0;j<=n;j++)
+                dp[i][j]=-1;
+        }
+        return find(m,n,str1,str2,dp);
+    }
+    public static int find(int m,int n,String a,String b,int[][] dp)
+    {
+        if(m==0)
+            return n;
+        if(n==0)
+            return m;
+        if(dp[m][n]!=-1)
+            return dp[m][n];
+        if(a.charAt(m-1)==b.charAt(n-1))
+            return dp[m][n]=find(m-1,n-1,a,b,dp);
+        else
+        {
+            int ans1=find(m-1,n-1,a,b,dp);
+            int ans2=find(m-1,n,a,b,dp);
+            int ans3=find(m,n-1,a,b,dp);
+            return dp[m][n]=1+Math.min(ans1,Math.min(ans2,ans3));
+        }
+        
+            
+    }
+}
