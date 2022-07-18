@@ -1,0 +1,26 @@
+import java.util.*;
+public class Solution {
+    public static Boolean wordBreak(String[] arr, int n, String target) {
+        // Write your code here.
+        Map<String,Boolean> h=new HashMap<>();
+        return find(arr,n,target,h);
+    }
+    public static Boolean find(String[] arr,int n,String target,Map<String,Boolean> m)
+    {
+        if(target.length()==0)
+            return true;
+        if(n==0)
+          return false;
+        if(m.containsKey(n+target))
+            return m.get(n+target);
+        if(target.contains(arr[n-1]))
+        {
+            Boolean ans=find(arr,n,target.replace(arr[n-1],""),m)|| find(arr,n-1,target,m);
+            m.put(n+target,ans);
+            return ans;
+        }
+        Boolean temp= find(arr,n-1,target,m);
+        m.put(n+target,temp);
+        return temp;
+    }
+}
