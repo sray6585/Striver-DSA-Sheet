@@ -1,0 +1,75 @@
+/************************************************************
+
+	Following is the Binary Tree node structure:
+
+	class BinaryTreeNode<T> {
+	    T data;
+	    BinaryTreeNode<T> left;
+	    BinaryTreeNode<T> right;
+
+	    public BinaryTreeNode(T data) {
+	        this.data = data;
+	    }
+	}
+
+************************************************************/
+import java.util.*;
+public class Solution {
+    public static List<List<Integer>> getTreeTraversal(BinaryTreeNode<Integer> root) {
+        // Write your code here.
+        List<List<Integer>> ans=new ArrayList<>();
+        if(root==null)
+            return ans;
+        List<Integer> in=new ArrayList<>();
+        List<Integer> pre=new ArrayList<>();
+        List<Integer> post=new ArrayList<>();
+        find(root,in,post,pre);
+        ans.add(in);
+        ans.add(pre);
+        ans.add(post);
+        return ans;
+    }
+    public static void find(BinaryTreeNode<Integer> root,List<Integer> in, List<Integer> post, List<Integer> pre)
+    {
+        if(root==null)
+            return;
+        Stack<Node> st=new Stack<>();
+        st.push(new Node(root,1));
+        //System.out.println(root.data);
+        while(!st.isEmpty())
+        {
+            Node temp=st.peek();
+            //System.out.println("polo"+temp.c);
+            if(temp.c==1)
+            {
+                //System.out.println("polo"+temp.node.data);
+                pre.add(temp.node.data);
+                temp.c++;
+                if(temp.node.left!=null)
+                    st.push(new Node(temp.node.left,1));
+            }
+            else if(temp.c==2)
+            {
+                in.add(temp.node.data);
+                temp.c++;
+                if(temp.node.right!=null)
+                    st.push(new Node(temp.node.right,1));
+            }
+            else
+            {
+                post.add(temp.node.data);
+                st.pop();
+            }
+        }
+    }
+}
+class Node
+{
+    BinaryTreeNode<Integer> node;
+    int c;
+    Node(BinaryTreeNode<Integer> node,int c)
+    {
+        this.c=c;
+        this.node=node;
+    }
+}

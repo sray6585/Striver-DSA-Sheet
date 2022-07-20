@@ -1,0 +1,71 @@
+/************************************************************
+
+    Following is the TreeNode class structure
+
+    class TreeNode<T> 
+    {
+       public:
+        T data;
+        TreeNode<T> left;
+        TreeNode<T> right;
+
+        TreeNode(T data) 
+        {
+            this.data = data;
+            left = null;
+            right = null;
+        }
+    };
+
+************************************************************/
+
+import java.util.*;
+
+public class Solution 
+{
+    public static ArrayList<Integer> verticalOrderTraversal(TreeNode<Integer> root) 
+    {
+        //    Write your code here.
+        ArrayList<Integer> ans=new ArrayList<>();
+        if(root==null)
+            return ans;
+        Map<Integer,ArrayList<Integer>> map=new TreeMap<>();
+        Queue<Node> q=new LinkedList<>();
+        q.offer(new Node(0,root));
+        while(!q.isEmpty())
+        {
+            Node temp=q.poll();
+            int d=temp.dis;
+            TreeNode<Integer> cur=temp.node;
+            if(map.containsKey(d))
+            {
+                map.get(d).add(cur.data);
+            }
+            else
+            {
+                ArrayList<Integer> t=new ArrayList<>();
+                t.add(cur.data);
+                map.put(d,t);
+            }
+            if(cur.left!=null)
+                q.offer(new Node(d-1,cur.left));
+            if(cur.right!=null)
+                q.offer(new Node(d+1,cur.right));
+        }
+        for(ArrayList<Integer> val:map.values())
+        {
+            ans.addAll(val);
+        }
+        return ans;
+    }
+}
+class Node
+{
+    int dis;
+    TreeNode<Integer> node;
+    Node(int dis,TreeNode<Integer> node)
+    {
+        this.dis=dis;
+        this.node=node;
+    }
+}

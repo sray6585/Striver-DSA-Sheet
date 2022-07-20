@@ -1,0 +1,55 @@
+/************************************************************
+
+    Following is the TreeNode class structure:
+
+    class BinaryTreeNode {
+		int val;
+		BinaryTreeNode left;
+		BinaryTreeNode right;
+
+		BinaryTreeNode(int val) {
+			this.val = val;
+			this.left = null;
+			this.right = null;
+		}
+	}
+
+************************************************************/
+
+import java.util.*;
+public class Solution {
+	public static ArrayList<Integer> getTopView(BinaryTreeNode root) {
+		// Write your code here.
+        ArrayList<Integer> ans=new ArrayList<>();
+        Map<Integer,Integer> map=new TreeMap<>();
+        if(root==null)
+            return ans;
+        Queue<Node> q=new LinkedList<>();
+        q.offer(new Node(0,root));
+        while(!q.isEmpty())
+        {
+            Node temp=q.poll();
+            int dis=temp.dis;
+            BinaryTreeNode node=temp.node;
+            if(!map.containsKey(dis))
+                map.put(dis,node.val);
+            if(node.left!=null)
+                q.offer(new Node(dis-1,node.left));
+            if(node.right!=null)
+                q.offer(new Node(dis+1,node.right));
+        }
+        for(Integer a:map.values())
+            ans.add(a);
+        return ans;
+	}
+}
+class Node
+{
+    int dis;
+    BinaryTreeNode node;
+    Node(int dis,BinaryTreeNode node)
+    {
+        this.dis=dis;
+        this.node=node;
+    }
+}

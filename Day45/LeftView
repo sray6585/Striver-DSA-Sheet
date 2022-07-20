@@ -1,0 +1,43 @@
+/************************************************************
+
+    Following is the TreeNode class structure
+
+    class TreeNode<T> 
+    {
+       public:
+        T data;
+        TreeNode<T> left;
+        TreeNode<T> right;
+
+        TreeNode(T data) 
+        {
+            this.data = data;
+            left = null;
+            right = null;
+        }
+    };
+
+************************************************************/
+
+import java.util.ArrayList;
+
+public class Solution 
+{
+    public static ArrayList<Integer> getLeftView(TreeNode<Integer> root) 
+    {
+        //    Write your code here.
+        ArrayList<Integer> ans=new ArrayList<>();
+        inorder(root,ans,0);
+        return ans;
+    }
+    public static void inorder(TreeNode<Integer> root,ArrayList<Integer> ans,int i)
+    {
+        if(root==null)
+            return;
+        if(ans.size()==i)
+            ans.add(root.data);
+        inorder(root.left,ans,i+1);
+        inorder(root.right,ans,i+1);
+        
+    }
+}
