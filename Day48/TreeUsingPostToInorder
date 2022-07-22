@@ -1,0 +1,43 @@
+/************************************************************
+  
+   Following is the TreeNode class structure
+   
+   class TreeNode<T> { 
+        T data; 
+        TreeNode<T> left;
+        TreeNode<T> right;
+  
+        TreeNode(T data) { 
+            this.data = data; 
+            left = null; 
+            right = null; 
+        }
+   }
+    
+ ************************************************************/
+import java.util.*;
+public class Solution {
+	public static TreeNode<Integer> getTreeFromPostorderAndInorder(int[] postOrder, int[] inOrder) {
+		// Write your code here.
+        if(inOrder == null || postOrder == null || inOrder.length != postOrder.length) return null;
+        Map<Integer,Integer> map=new HashMap<>();
+        //System.out.println("bbppl");
+        int n=inOrder.length;
+        for(int i=0;i<n;i++)
+            map.put(inOrder[i],i);
+        //System.out.println("ppl");
+        return create(postOrder,0,n-1,inOrder,0,n-1,map);
+	}
+    public static TreeNode<Integer> create(int[] post,int ps,int pe,int[] in,int is,int ie,Map<Integer,Integer> map)
+    {
+        if(ps>pe || is>ie)
+            return null;
+        //System.out.println(pe+"ppp");
+        TreeNode<Integer> root=new TreeNode(post[pe]);
+        int index=map.get(post[pe]);
+        int size=index-is;
+        root.left=create(post,ps,ps+size-1,in,is,index-1,map);
+        root.right=create(post,ps+size,pe-1,in,index+1,ie,map);
+        return root;        
+    }
+}

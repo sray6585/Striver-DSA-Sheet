@@ -1,0 +1,90 @@
+/************************************************************
+
+    Following is the TreeNode class structure.
+
+	class TreeNode<T> 
+	{
+	    public T data;
+	    public TreeNode<T> left;
+	    public TreeNode<T> right;
+
+	    TreeNode(T data) 
+	    {
+	        this.data = data;
+	        left = null;
+	        right = null;
+	    }
+	}
+
+************************************************************/
+
+public class Solution 
+{
+    public static TreeNode<Integer> head;
+    public static TreeNode<Integer> flattenBinaryTree(TreeNode<Integer> root)
+    {
+        // Write your code here.
+        head=new TreeNode(0);
+        TreeNode<Integer> tail=head;
+        create(root);
+        return tail.right;
+    }
+    public static void create(TreeNode<Integer> root)
+    {
+        if(root==null)
+            return;
+        head.right=new TreeNode(root.data);
+        head=head.right;
+        create(root.left);
+        create(root.right);
+            
+    }
+}
+
+///////////////////////////////////////////
+
+public class Solution 
+{
+    public static TreeNode<Integer> head;
+    public static TreeNode<Integer> flattenBinaryTree(TreeNode<Integer> root)
+    {
+        // Write your code here.
+        head=new TreeNode(0);
+        TreeNode<Integer> tail=head;
+        create(root);
+        return tail.right;
+    }
+    public static void create(TreeNode<Integer> root)
+    {
+        while(root!=null)
+        {
+            if(root.left==null)
+            {
+                head.right=new TreeNode(root.data);
+                head=head.right;
+                root=root.right;
+            }
+            else
+            {
+                TreeNode<Integer> pre=root.left;
+                while(pre.right!=null && pre.right!=root)
+                {
+                    pre=pre.right;
+                }
+                if(pre.right==null)
+                {
+                    pre.right=root;
+                    head.right=new TreeNode(root.data);
+                    head=head.right;
+                    root=root.left;                    
+                }
+                else
+                {
+                    pre.right=null;
+                    root=root.right;
+                }
+            }
+        }
+            
+    }
+}
