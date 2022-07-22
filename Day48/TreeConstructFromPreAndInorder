@@ -1,0 +1,48 @@
+/************************************************************
+
+    Following is the TreeNode class structure
+
+    class TreeNode<T>
+    {
+       public:
+        T data;
+        TreeNode<T> left;
+        TreeNode<T> right;
+
+        TreeNode(T data)
+        {
+            this.data = data;
+            left = null;
+            right = null;
+        }
+    };
+
+************************************************************/
+
+import java.util.*;
+
+public class Solution 
+{
+    public static TreeNode<Integer> buildBinaryTree(ArrayList<Integer>  inorder, ArrayList<Integer>  preorder) 
+    {
+        //    Write your code here.
+        Map<Integer,Integer> map=new HashMap<>();
+        int n=inorder.size();
+        for(int i=0;i<n;i++)
+            map.put(inorder.get(i),i);
+       
+        return create(inorder,0,n-1,preorder,0,n-1,map);
+    }
+    public static TreeNode<Integer> create(ArrayList<Integer>  inorder,int is,int ie,ArrayList<Integer>  preorder,int ps,int pe,Map<Integer,Integer> map) 
+    {
+        if(is>ie || ps>pe )
+            return null;
+        TreeNode<Integer> root=new TreeNode(preorder.get(ps));
+//         System.out.println(ps+"pppo");
+        int index=map.get(preorder.get(ps));
+        int size=index-is;
+        root.left=create(inorder,is,index-1,preorder,ps+1,ps+size,map);
+        root.right=create(inorder,index+1,ie,preorder,ps+size+1,pe,map);
+        return root;
+    }
+}
