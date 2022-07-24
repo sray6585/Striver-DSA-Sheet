@@ -1,0 +1,63 @@
+/*************************************************************
+    Following is the Binary Tree node structure
+
+	class TreeNode<T> {
+	    public T data;
+	    public TreeNode<T> left;
+	    public TreeNode<T> right;
+
+	    TreeNode(T data) {
+	        this.data = data;
+	        left = null;
+	        right = null;
+	    }
+	}
+
+*************************************************************/
+
+import java.util.*;
+
+public class Solution {
+	public static ArrayList<Integer> predecessorSuccessor(BinaryTreeNode<Integer> root, int key) {
+		// Write your code here.
+        ArrayList<Integer> ans=new ArrayList<>();
+        if(root==null)
+            return ans;
+        return find(root,key,ans,-1,-1);
+	}
+    public static ArrayList<Integer> find(BinaryTreeNode<Integer> root,int key,ArrayList<Integer> ans,int pre,int suc)
+    {
+        if(root==null)
+            return ans;
+        if(root.data.equals(key))
+        {
+            if(root.left!=null)
+                ans.add(largest(root.left));
+            else
+                ans.add(pre);
+            if(root.right!=null)
+                ans.add(smallest(root.right));
+            else
+                ans.add(suc);
+            return ans;
+        }
+        
+        if(key<root.data)
+            return find(root.left,key,ans,pre,root.data);
+        else if(key>=root.data)
+            return find(root.right,key,ans,root.data,suc);
+        return ans;
+    }
+    public static int largest(BinaryTreeNode<Integer> root)
+    {
+        if(root.right==null)
+            return root.data;
+        return largest(root.right);        
+    }
+    public static int smallest(BinaryTreeNode<Integer> root)
+    {
+        if(root.left==null)
+            return root.data;
+        return largest(root.left);        
+    }
+}

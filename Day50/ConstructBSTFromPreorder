@@ -1,0 +1,46 @@
+ 
+ 
+/*************************************************************
+	Following is the Binary Tree node structure
+	class TreeNode<T> {
+		public T data;
+		public TreeNode<T> left;
+		public TreeNode<T> right;
+
+		TreeNode(T data) {
+			this.data = data;
+			left = right = null;
+		}
+
+};************************************************************/
+
+import java.util.*;
+
+public class Solution {
+    public static Map<Integer,Integer> map;
+	public static TreeNode<Integer> preOrderTree(int[] preOrder) {
+ 		// Write your code here
+        int n=preOrder.length;
+        map=new HashMap<>();
+        int[] inOrder=new int[n];
+        for(int i=0;i<n;i++){
+            inOrder[i]=preOrder[i];
+        }
+        Arrays.sort(inOrder);
+        for(int i=0;i<n;i++)
+            map.put(inOrder[i],i);
+        return BST(preOrder,0,n-1,inOrder,0,n-1);
+	}
+    public static TreeNode<Integer> BST(int[] preOrder,int ps,int pe,int[] inOrder,int is,int ie)
+    {
+        if(ps>pe ||is>ie)
+            return null;
+        TreeNode<Integer> root=new TreeNode(preOrder[ps]);
+        int index=map.get(preOrder[ps]);
+        int size=index-is;
+        root.left=BST(preOrder,ps+1,ps+size,inOrder,is,index-1);
+        root.right=BST(preOrder,ps+size+1,pe,inOrder,index+1,ie);
+        return root;
+    }
+
+}
