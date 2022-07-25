@@ -1,0 +1,65 @@
+/*
+    Definition of Node class for reference
+
+    class TreeNode<T> 
+    {
+        public T data;
+        public TreeNode<T> left;
+        public TreeNode<T> right;
+
+        TreeNode(T data)
+        {
+            this.data = data;
+            left = null;
+            right = null;
+        }
+    }
+
+*/
+import java.util.*;
+public class Solution {
+
+    static class BSTIterator{
+        Stack<TreeNode> st;
+        TreeNode<Integer> root;
+        BSTIterator(TreeNode<Integer> root){
+            // Write your code here
+            st=new Stack<>();
+            this.root=root;
+            push(root);
+        }
+
+        int next(){
+            // Write your code here
+            root=st.peek();
+            int val=root.data;
+            root=st.pop().right;
+            push(root);
+            return val;
+            
+        }
+        void push(TreeNode<Integer> root)
+        {
+            while(root!=null)
+            {
+                st.push(root);
+                root=root.left;
+            }
+            
+        }
+
+        boolean hasNext(){
+            // Write your code here
+            return !st.isEmpty();
+        }
+    }
+}
+
+/*
+    Your BSTIterator object will be instantiated and called as such:
+    BSTIterator iterator = new BSTIterator(root);
+    while(iterator.hasNext())
+    {
+       print(iterator.next()+" ");
+    }
+*/

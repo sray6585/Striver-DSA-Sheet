@@ -1,0 +1,115 @@
+/*************************************************************
+    
+    Following is the Binary Tree node structure:
+
+    class BinaryTreeNode {
+
+	int data;
+	BinaryTreeNode left;
+	BinaryTreeNode right;
+	
+	BinaryTreeNode(int data) {
+		this.data = data;
+		left = null;
+		right = null;
+	   }
+    }
+
+*************************************************************/
+import java.util.*;
+public class Solution {
+	public static boolean pairSumBst(BinaryTreeNode root, int k) {
+		// Write your code here.
+        Set<Integer> h=new HashSet<>();
+        return check(root,k,h);
+	}
+    public static boolean check(BinaryTreeNode root,int k,Set<Integer> h)
+    {
+        if(root==null)
+            return false;
+        if(h.contains(k-root.data))
+            return true;
+        h.add(root.data);
+        return check(root.left,k,h)||check(root.right,k,h);
+    }
+}
+
+......................................................................
+
+
+
+/*************************************************************
+    
+    Following is the Binary Tree node structure:
+
+    class BinaryTreeNode {
+
+	int data;
+	BinaryTreeNode left;
+	BinaryTreeNode right;
+	
+	BinaryTreeNode(int data) {
+		this.data = data;
+		left = null;
+		right = null;
+	   }
+    }
+
+*************************************************************/
+import java.util.*;
+public class Solution {
+	public static boolean pairSumBst(BinaryTreeNode root, int k) {
+		// Write your code here.
+        BST one=new BST(root,false);
+        BST two=new BST(root,true);
+        int i=one.next();
+        int j=two.next();
+        while(i<j)
+        {
+            if(i+j==k)
+                return true;
+            else if(i+j>k)
+                j=two.next();
+            else
+                i=one.next();
+        }
+        return false;
+	}
+    
+}
+class BST
+{
+    Stack<BinaryTreeNode> st;
+    boolean rev;
+    BinaryTreeNode root;
+    BST(BinaryTreeNode root,boolean rev)
+    {
+        st=new Stack<>();
+        this.root=root;
+        this.rev=rev;
+        push(root);
+    }
+    int next()
+    {
+        root=st.pop();
+        int data=root.data;
+        if(rev)
+            root=root.left;
+        else
+            root=root.right;
+        push(root);
+        return data;
+    }
+    void push(BinaryTreeNode root)
+    {
+        while(root!=null)
+        {
+            st.push(root);
+            if(rev)
+                root=root.right;
+            else
+                root=root.left;
+        }
+    }
+}
+
