@@ -1,0 +1,49 @@
+/*************************************************************************
+
+    Following is the class structure of the Node class:
+
+	class TreeNode<T> {
+	    public T data;
+	    public TreeNode<T> left;
+	    public TreeNode<T> right;
+
+	    TreeNode(T data) {
+	        this.data = data;
+	        left = null;
+	        right = null;
+	    }
+	}
+
+*************************************************************************/
+
+public class Solution {
+	public static int largestBST(TreeNode<Integer> root) {
+		// Write your code here.
+        return find(root).size;
+	}
+    public static Node find(TreeNode<Integer> root)
+    {
+        if(root==null)
+            return new Node(0,Integer.MAX_VALUE,Integer.MIN_VALUE);
+        if(root.left==null && root.right==null)
+            return new Node(1,root.data,root.data);
+        Node left=find(root.left);
+        Node right=find(root.right);
+        if(root.data>left.max && root.data<=right.min)
+        {
+            return new Node(left.size+right.size+1,Math.min(left.min,root.data),Math.max(root.data,right.max));
+        }
+        else
+            return new Node(Math.max(left.size,right.size),Integer.MIN_VALUE,Integer.MAX_VALUE);
+    }
+}
+class Node
+{
+    int size,min,max;
+    Node(int size,int min,int max)
+    {
+        this.size=size;
+        this.min=min;
+        this.max=max;
+    }
+}

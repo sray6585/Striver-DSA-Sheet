@@ -1,0 +1,77 @@
+/************************************************************
+
+    Following is the TreeNode class structure
+
+    class TreeNode<T> 
+    {
+       public:
+        T data;
+        TreeNode<T> left;
+        TreeNode<T> right;
+
+        TreeNode(T data) 
+        {
+            this.data = data;
+            left = null;
+            right = null;
+        }
+    };
+
+************************************************************/
+
+import java.util.*;
+public class Solution 
+{
+    public static String serializeTree(TreeNode<Integer> root)
+    {
+        //    Write your code here for serialization of the tree.
+        Queue<TreeNode<Integer>> q=new LinkedList<>();
+        if(root==null)
+            return "";
+        q.offer(root);
+        StringBuilder s=new StringBuilder();
+        while(!q.isEmpty())
+        {
+            TreeNode<Integer> temp=q.poll();
+            if(temp==null){
+                s.append("n ");
+                continue;
+            }
+            s.append(temp.data+" ");
+            q.offer(temp.left);
+            q.offer(temp.right);                   
+        }
+        return s.toString();
+    }
+    
+    public static TreeNode<Integer> deserializeTree(String str)
+    {
+        //    Write your code here for deserialization of the tree.
+        int i=0;
+        String[] st=str.split(" ");
+        Queue<TreeNode<Integer>> q=new LinkedList<>();
+        if(str.length()==0)
+            return null;
+        TreeNode<Integer> root=new TreeNode(st[i]);
+        q.offer(root);
+        
+        while(!q.isEmpty())
+        {
+            TreeNode<Integer> temp =q.poll();
+            i++;
+            if(!st[i].equals("n"))
+            {
+                temp.left=new TreeNode(st[i]);
+                q.offer(temp.left);
+            }
+            i++;
+            if(!st[i].equals("n"))
+            {
+                temp.right=new TreeNode(st[i]);
+                q.offer(temp.right);
+            }              
+        }
+        
+        return root;
+    }
+}
