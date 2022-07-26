@@ -1,0 +1,41 @@
+import java.util.*;
+public class Solution {
+    public static int[] findMedian(int[] arr, int n) {
+        // Write your code here.
+        int ans[]=new int[n];
+        PriorityQueue<Integer> max=new PriorityQueue<>((a,b)->b-a);
+        PriorityQueue<Integer> min=new PriorityQueue<>();
+        max.offer(arr[0]);
+        ans[0]=arr[0];
+        for(int i=1;i<n;i++)
+        {
+            if(arr[i]<max.peek())
+            {
+                max.offer(arr[i]);
+                if(max.size()-min.size()>1)
+                    min.offer(max.poll());
+            }
+            else
+            {
+                min.offer(arr[i]);
+                if(min.size()-max.size()>1)
+                    max.offer(min.poll());
+            }
+            if((i&1)==0)
+            {
+                if(max.size()>min.size())
+                {
+                    ans[i]=max.peek();
+                }
+                else
+                    ans[i]=min.peek();
+            }
+            else
+            {
+                ans[i]=(max.peek()+min.peek())/2;
+            }
+        }
+        return ans;
+        
+    }
+}

@@ -1,0 +1,24 @@
+import java.util.*;
+
+public class Solution {
+
+	public static ArrayList<Integer> countDistinctElements(ArrayList<Integer> arr, int k) {
+
+		// Write your code here
+        Map<Integer,Integer> s=new HashMap<>();
+        for(int i=0;i<k-1;i++)
+        {
+            s.put(arr.get(i),s.getOrDefault(arr.get(i),0)+1);
+        }
+        ArrayList<Integer> ans=new ArrayList<>();
+        for(int i=k-1;i<arr.size();i++)
+        {
+            s.put(arr.get(i),s.getOrDefault(arr.get(i),0)+1);
+            ans.add(s.size());
+            s.put(arr.get(i-k+1),s.get(arr.get(i-k+1))-1);
+            if(s.get(arr.get(i-k+1))==0)
+                s.remove(arr.get(i-k+1));
+        }
+        return ans;
+	}
+}
