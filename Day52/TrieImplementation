@@ -1,0 +1,80 @@
+public class Trie {
+
+
+    //Initialize your data structure here
+    public static Node root;
+    Trie() {
+        //Write your code here
+        root=new Node('\0');
+    }
+
+
+    //Inserts a word into the trie
+
+    public static void insert(String word) {
+        //Write your code here
+        insert(word,root);
+    }
+    public static void insert(String word,Node root)
+    {
+        if(word.length()==0)
+        {
+            root.isTerminating=true;
+            return;
+        }
+        int index=word.charAt(0)-'a';
+        Node child=root.children[index];
+        if(child==null)
+        {
+            child=new Node(word.charAt(0));
+            root.children[index]=child;
+        }
+        insert(word.substring(1),child);
+    }
+
+    //Returns if the word is in the trie
+
+    public static boolean search(String word) {
+        return search(word,root);
+    }
+    public static boolean search(String word,Node root)
+    {
+        if(word.length()==0)
+            return root.isTerminating;
+        int index=word.charAt(0)-'a';
+        Node child=root.children[index];
+        if(child==null)
+            return false;
+        return search(word.substring(1),child);
+    }
+
+    
+    //Returns if there is any word in the trie that starts with the given prefix
+
+    public static boolean startsWith(String prefix) {
+        //Write your code here
+        return startsWith(prefix,root);
+    }
+    public static boolean startsWith(String word,Node root)
+    {
+        if(word.length()==0)
+            return true;
+        int index=word.charAt(0)-'a';
+        Node child=root.children[index];
+        if(child==null)
+            return false;
+        return startsWith(word.substring(1),child);
+    }
+}
+class Node
+{
+    char data;
+    Node children[];
+    boolean isTerminating;
+    Node(char data)
+    {
+        this.data=data;
+        this.children=new Node[26];
+        this.isTerminating=false;
+    }    
+}
