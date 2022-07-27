@@ -1,0 +1,72 @@
+public class Solution {
+
+    public static int maximumXor(int[] A) {
+        
+        // Write your Code here
+        int max=Integer.MIN_VALUE;
+        Trie trie=new Trie();
+        for(int a:A)
+            trie.insert(a);
+        for(int a:A)
+            max=Math.max(max,trie.max(a));
+        return max;
+    }
+}
+class Node
+{
+    Node[] links;
+    Node()
+    {
+        links=new Node[2];
+    }
+    void put(int bit,Node node)
+    {
+        links[bit]=node;
+    }
+    Node get(int bit)
+    {
+        return links[bit];
+    }
+    boolean contains(int bit)
+    {
+        return links[bit]!=null;
+    }
+}
+class Trie
+{
+    Node root;
+    Trie()
+    {
+        root=new Node();
+    }
+    void insert(int num)
+    {
+        Node node=root;
+        for(int i=31;i>=0;i--)
+        {
+            int bit=(num>>i)&1;
+            if(!node.contains(bit))
+            {
+                node.put(bit,new Node());
+            }
+            node=node.get(bit);
+        }
+    }
+    int max(int num)
+    {
+        int max=0;
+        Node node=root;
+        for(int i=31;i>=0;i--)
+        {
+            int bit=(num>>i)&1;
+            if(node.contains(1-bit))
+            {
+                max=max|(1<<i);
+                node=node.get(1-bit);
+            }
+            else
+                node=node.get(bit);
+        }
+        return max;
+    }
+}

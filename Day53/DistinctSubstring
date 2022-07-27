@@ -1,0 +1,73 @@
+
+import java.util.ArrayList;
+
+public class Solution 
+{
+
+	public static int countDistinctSubstrings(String s) 
+	{
+		//	  Write your code here.
+        Trie trie=new Trie();
+        for(int i=0;i<s.length();i++)
+        {
+            trie.insert(s.substring(i));
+        }
+        return trie.count+1;
+	}
+}
+class Node
+{
+    Node[] links;
+    boolean flag;
+    Node()
+    {
+        links=new Node[26];
+        flag=false;
+    }
+    void put(char ch,Node node)
+    {
+        links[ch-'a']=node;
+    }
+    Node get(char ch)
+    {
+        return links[ch-'a'];
+    }
+    boolean contains(char ch)
+    {
+        return links[ch-'a']!=null;
+    }
+    void setEnd()
+    {
+        this.flag=true;
+    }
+    boolean getEnd()
+    {
+        return this.flag;
+    }
+}
+class Trie
+{
+    Node root;
+    int count;
+    Trie()
+    {
+        root=new Node();
+        count=0;
+    }
+    int insert(String word)
+    {
+        Node node=root;
+        for(int i=0;i<word.length();i++)
+        {
+            char ch=word.charAt(i);
+            if(!node.contains(ch))
+            {
+                node.put(ch,new Node());
+                count++;
+            }
+            node=node.get(ch);
+        }
+        node.setEnd();
+        return count;
+    }
+}
