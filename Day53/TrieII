@@ -1,0 +1,123 @@
+public class Trie {
+    Node root;
+    public Trie() {
+        // Write your code here.
+        root=new Node();
+    }
+
+    public void insert(String word) {
+        // Write your code here.
+        Node node=root;
+        for(int i=0;i<word.length();i++)
+        {
+            char ch=word.charAt(i);
+            if(!node.contains(ch))
+            {
+                node.put(ch,new Node());
+            }
+            node=node.get(ch);
+            node.increaseCount();
+        }
+        node.setEnd();
+        node.increaseEnd();
+    }
+    
+
+    public int countWordsEqualTo(String word) {
+        // Write your code here.
+        Node node=root;
+        for(int i=0;i<word.length();i++)
+        {
+            char ch=word.charAt(i);
+            if(!node.contains(ch))
+            {
+                return 0;
+            }
+            node=node.get(ch);
+        }
+        return node.getEndCount();
+    }
+    public int countWordsStartingWith(String word) {
+        // Write your code here.
+        Node node=root;
+        for(int i=0;i<word.length();i++)
+        {
+            char ch=word.charAt(i);
+            if(!node.contains(ch))
+            {
+                node.put(ch,new Node());
+            }
+            node=node.get(ch);
+        }
+        return node.getCount();
+    }
+    public void erase(String word) {
+        // Write your code here.
+       Node node=root;
+       for(int i=0;i<word.length();i++)
+       {
+            char ch=word.charAt(i);
+            node=node.get(ch);
+            node.deleteCount();
+        }
+        node.deleteEnd();
+    }
+}
+class Node
+{
+    Node[] links;
+    boolean end;
+    int endCount;
+    int count;
+    Node()
+    {
+        links=new Node[26];
+        end=false;
+        endCount=0;
+        count=0;        
+    }
+    boolean contains(char ch)
+    {
+        return links[ch-'a']!=null;
+    }
+    void put(char ch,Node node)
+    {
+        links[ch-'a']=node;
+    }
+    Node get(char ch)
+    {
+        return links[ch-'a'];
+    }
+    boolean isEnd()
+    {
+        return end;
+    }
+    void setEnd()
+    {
+        end=true;
+    }
+    void increaseEnd()
+    {
+        this.endCount++;
+    }
+    void increaseCount()
+    {
+        this.count++;
+    }
+    int getEndCount()
+    {
+        return endCount;
+    }
+    int getCount()
+    {
+        return count;
+    }
+    void deleteCount()
+    {
+        this.count--;
+    }
+    void deleteEnd()
+    {
+        this.endCount--;
+    }
+}
